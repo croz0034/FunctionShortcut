@@ -355,6 +355,45 @@ let Interractable = {
 
     },
     ///////////////// Filters (Add at a later date)
+        listFromObject: {
+          Used: false,
+          List: [],
+          Build: (zone)=>{
+              Interractable.listFromObject.Used = true;
+              
+              console.log(ObjectArrays[zone.id][0])
+              console.log(zone.firstElementChild)
+            let targets = zone.firstElementChild;
+            
+            let Builder = {}
+            
+            targets.childNodes.forEach((target)=>{
+                if(target.classList){
+                console.log(target.classList[0])
+                Builder[target.classList[0]] = target;
+                   }
+                console.log('pling')
+            })
+          
+          let ListBuilder = Object.keys(Builder)
+              
+              ObjectArrays[zone.id].forEach((item)=>{
+                  let stage = document.createElement('div');
+                  
+                  let additions;
+                  ListBuilder.forEach((li)=>{
+                    additions = Builder[li].cloneNode(true)
+                    additions.textContent += item[li];
+                    stage.appendChild(additions)
+                      console.log(item[li])
+                      
+                  })
+                  zone.appendChild(stage)
+                  
+              })
+          }
+            
+        },
     ///////////////// Initalization aids
     Scour: (Item) => {
         Interractable[Item].List = document.querySelectorAll(`.${Item}`);
