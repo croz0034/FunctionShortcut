@@ -406,7 +406,8 @@ zone.innerHTML = ""
             additions.innerHTML = 
             `<option value="includes">contains</option><option value="excludes">excludes</option>
             <option value="greater"> greater than </option>
-            <option value="less"> less than </option>`;
+            <option value="less"> less than </option>
+            <option value="equal"> equal to </option>`;
             filter.appendChild(additions);
             additions = document.createElement("input");
             additions.type = "text";
@@ -438,7 +439,7 @@ zone.innerHTML = ""
             else {item.id = 'hidden'}  x ++
             })
         }
-                   if(Filter == "excludes" ){
+            if(Filter == "excludes" ){
             items.forEach((item)=>{
                 let itemTarget = JSON.stringify(target[x][By]).toUpperCase()
             if(itemTarget.includes(UserInput)){
@@ -449,11 +450,99 @@ zone.innerHTML = ""
             else {item.id = 'passed'}  x ++
             })
         }
+            if(Filter == "greater" ){
+            items.forEach((item)=>{
+                let itemTarget = target[x][By];
+                itemTarget = JSON.stringify(itemTarget)
+                if(itemTarget){
+                    console.log(itemTarget)
+                itemTarget = itemTarget.replace(/\D+/g, "");}
+                UserInput = JSON.stringify(UserInput).replace(/\D+/g, "");
+            if(itemTarget > UserInput){
+            item.id = "passed"
+                console.log(item)
+            }
+                
+            else {item.id = 'hidden'}  x ++
+            })
+        }
+            if(Filter == "less" ){
+            items.forEach((item)=>{
+                let itemTarget = target[x][By];
+                itemTarget = JSON.stringify(itemTarget)
+                if(itemTarget){
+                    console.log(itemTarget)
+                itemTarget = itemTarget.replace(/\D+/g, "");}
+                UserInput = JSON.stringify(UserInput).replace(/\D+/g, "");
+            if(itemTarget < UserInput){
+            item.id = "passed"
+                console.log(item)
+            }
+                
+            else {item.id = 'hidden'}  x ++
+            })
+        }
+            if(Filter == "equal" ){
+            items.forEach((item)=>{
+                let itemTarget = target[x][By];
+                itemTarget = JSON.stringify(itemTarget)
+                if(itemTarget){
+                    console.log(itemTarget)
+                itemTarget = itemTarget.replace(/\D+/g, "");}
+                UserInput = JSON.stringify(UserInput).replace(/\D+/g, "");
+            if(itemTarget > UserInput){
+            item.id = "passed"
+                console.log(item)
+            }
+                
+            else {item.id = 'hidden'}  x ++
+            })
+        }
             
             
             
     }
         }
+    },
+
+    objectBuilder: {
+        Used: false,
+        List: [],
+        SaveZone: { notify: ()=>{
+            Interractable.allBuild('listFromObject')
+        }
+        },
+        Build: (zone) => {
+            console.log("pling")
+            Interractable.objectBuilder.Used = true;
+            let Builder = {};
+            if(Interractable.objectBuilder.SaveZone[zone.id]){}else{
+            Interractable.objectBuilder.SaveZone[zone.id] = Builder;}
+            zone.querySelector(".Save").addEventListener("click", Interractable.objectBuilder.SaveButton)
+            },
+        SaveButton: (ev)=>{
+            let targets = ev.target.parentElement;
+            console.log(targets);
+            let savename = targets.querySelector(".Name").value
+            let Builder = {};
+            Interractable.objectBuilder.SaveZone[targets.id][savename] = Builder;
+            console.log(targets.id)
+            
+            targets.childNodes.forEach((target) => {
+                if (target.classList) {
+                    if(target.classList[0] && !(target.classList.contains("Name")&& !(target.classList.contains("Save")))){
+                        
+                    Builder[target.classList[0]] = target.value;
+                    console.log(target.classList[0])
+                    }
+                }
+            })
+           console.log(JSON.stringify(Interractable.objectBuilder.SaveZone))
+            
+        
+            
+        }
+        
     },
     ///////////////// Initalization aids
     Scour: (Item) => {

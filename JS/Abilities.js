@@ -1,4 +1,10 @@
-let ObjectArrays = { abilities :[{
+
+
+let ObjectArrays = { 
+    colours: Interractable.objectBuilder.SaveZone.PrimaryColour,
+    
+    
+    abilities :[{
 		"name": "Abeyance",
 		"class/level": [{
 			"Healer": 5
