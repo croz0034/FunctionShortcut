@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Blank Template</title>
+
+    <link rel="stylesheet" href="CSS/Screen.css">
+
+</head>
+
+<body>
+    <br>
+
+    <div class="page" id="Text">
+
+        <div class="drawScreen"></div>
+        <div class="ToolBar">
+            Mouse Mode: <select class="Mode">
+                    <option value="Select"> Select </option>
+                    <option value="Drag">Drag</option>
+                    <option value="Delete">Delete</option>
+                    <option value="BoxDraw">BoxDraw</option>
+                    <option value="Text">Text</option>
+                </select>
+            
+            <div class="objectBuilder Minbar" id="Primary Colour">
+                Red: <input type="range" min="0" max="255" value="0" class="Red"><br>
+                Green: <input type="range" min="0" max="255" value="0" class="Green"><br>
+                Blue: <input type="range" min="0" max="255" value="0" class="Blue"><br>
+                <input type="text" placeholder="ColourName" class="Name"> <button class="Save">Save</button>
+            </div>
+            <div class="objectBuilder Minbar" id="Secondary Colour">
+                Red: <input type="range" min="0" max="255" value="255" class="Red"><br>
+                Green: <input type="range" min="0" max="255" value="255" class="Green"><br>
+                Blue: <input type="range" min="0" max="255" value="255" class="Blue"><br>
+                <input type="text" placeholder="ColourName" class="Name"> <button class="Save">Save</button>
+            </div>
+
+            <div class="Minbar" id="Text Settings">
+                
+                Text Type: <select class="TextType">
+                    <option value="p">P </option>
+                    <option value="h1">H1</option>
+                    <option value="h2">H2</option>
+                    <option value="h3">H3</option>
+                    <option value="h4">H4</option>
+                    <option value="h5">H5</option>
+                    <option value="h6">H6</option>
+                    <option value="li">Li </option>
+                </select>
+                <br>
+                Font Size: <input class="FontSize">
+               
+                <br>
+                Text Align: <select class="TextAlign">
+                    <option value="inherit">inherit</option>
+                    <option value="left">left</option>
+                    <option value="center">center</option>
+                    <option value="right">right</option>
+                    <option value="justify">justify</option>
+                </select>
+                <br></div>
+
+        </div>
+
+
+
+    </div>
+    
+<div class="page" id="Var Tracker">
+       <div class="ConstructSettings VariableTracker  Minbar " id="ALL" style="width: 100%; display: block">
+        </div>
+   </div>
+
+
+    <script src="JS/Interractable.js"></script>
+    <script src="JS/DivDraw.js">
+    </script>
+</body>
+  
+</html>
+
+

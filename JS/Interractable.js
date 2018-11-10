@@ -436,6 +436,9 @@ Interractable.allBuild("VariableTracker");
             let MiniBar = document.createElement("p");
             MiniBar.classList = zone.classList;
             MiniBar.innerHTML = `${zone.id} <div style="float: right; height: 1rem; width: 1rem" id="Toggler"> - </div>`;
+            if(zone.getAttribute('info')){
+                MiniBar.setAttribute("info", zone.getAttribute('info'))
+            }
             zone.parentElement.replaceChild(MiniBar, zone);
             MiniBar.appendChild(zone)
             let Button = MiniBar.querySelector("#Toggler");

@@ -49,9 +49,6 @@ text-align: center;
 .EmptySpace{
     padding: 137rem;
 }
-#hidden{
-    display: none;
-}
 
          #nav {
              position: fixed;
@@ -104,4 +101,8 @@ ul, ol {
 }
 li{
     border: none;
+}
+
+#hidden, .hidden{
+    display: none;
 }

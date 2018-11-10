@@ -1,0 +1,54 @@
+*{
+    margin: none;
+    box-sizing: border-box;
+    z-index: 0;
+}
+.drawScreen {
+    position:absolute;
+    top: 40px;
+    left: 0;
+    border: solid black 1px;
+    width: 375px;
+    height: 667px;
+    z-index: -1;
+}
+.drawnDiv {
+    position: absolute;
+    border: solid black 1px;
+}
+.hidden, #hidden{
+    display: none;
+}
+.Minbar{
+    border:solid 1px black;
+}
+.ToolBar{
+    position:absolute;
+    top: 40px;
+    left: 375px;
+    border: outset darkblue 5px;
+    width: 200px;
+    height: 667px;
+    z-index: -1;
+    overflow-y: scroll
+    
+}
+.ToolBar:first-child{
+    top: 0;
+    margin-top: -1rem;
+}
+input, select {
+    width: 100%;
+}
+#nav{
+    border: solid;
+    position: fixed;
+    top: -1.5rem;
+    left: 0;
+    width: 100%;
+    height: 40px;
+}
+#nav > ul > li {
+    display: inline;
+        border-right: solid lightgray;
+}
