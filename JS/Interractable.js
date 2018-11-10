@@ -24,8 +24,7 @@ let Interractable = {
                 console.log('pling')
             })
         }, 100)
-    },
-    
+    }, 
     //////////////// Dev Toys
     VariableTracker : {Used: false,
 List: [],
@@ -41,7 +40,7 @@ ObjectPopulate : (zone, variableUsed, path) => {
         }
         else{
         additions = document.createElement('ul');}
-        additions.setAttribute("path", JSON.stringify(`${path}.${Keys[i]}.` ))
+        additions.setAttribute("path", JSON.stringify(`.${path}.${Keys[i]}` ))
         additions.textContent = ` ${Keys[i]}`;
         additions.class = "continue";
         additions.setAttribute("info", JSON.stringify(variableUsed[Keys[i]]))
@@ -120,7 +119,7 @@ Build : (zone) => {
     // will be done by zone in the future
     // Will target by id in the future
     zone.setAttribute("info", JSON.stringify(DataPoints));
-    Interractable.VariableTracker.ObjectPopulate(zone, DataPoints, "Interractable.objectBuilder.SaveZone.");
+    Interractable.VariableTracker.ObjectPopulate(zone, DataPoints, "Interractable.objectBuilder.SaveZone");
 }
 
     
@@ -130,26 +129,6 @@ Build : (zone) => {
         Used: false,
         List: [],
         SaveZone: {
-            notify: () => {
-                Interractable.allBuild('listFromObject')
-            },
-            TestVars : {
-
-    abilities: {
-        "name": "Abeyance",
-        "Healer": {5: 5, 2:2},
-        "type": 0,
-        "school": 7,
-        "range": 0,
-        "incant": ["The strength of the aether is mine to evoke.", "test"],
-        "materials": "green ",
-        "effect": "target is Stunned for 60 seconds.",
-        "limitations": "",
-        "note": "Ignores armor",
-        "statelink": 7,
-        "id": 1
-    }
-}
         },
         Build: (zone) => {
             console.log("pling")
@@ -163,14 +142,16 @@ Build : (zone) => {
         SaveButton: (ev) => {
             let targets = ev.target.parentElement;
             console.log(targets);
-            let savename = targets.querySelector(".Name").value
-            let Builder = {};
+            let savename = targets.querySelector(".Name").value;
+            
+            console.log(ev.target.parentElement.id)
+            let Builder = Interractable.objectBuilder.SaveZone[ev.target.parentElement.id][savename] = {};
             Interractable.objectBuilder.SaveZone[targets.id][savename] = Builder;
             console.log(targets.id)
 
             targets.childNodes.forEach((target) => {
                 if (target.classList) {
-                    if (target.classList[0] && !(target.classList.contains("Name") && !(target.classList.contains("Save")))) {
+                    if (target.classList[0] && !(target.classList.contains("Name") && !(target.classList == ("Save")))) {
 
                         Builder[target.classList[0]] = target.value;
                         console.log(target.classList[0])
@@ -178,7 +159,9 @@ Build : (zone) => {
                 }
             })
             console.log(JSON.stringify(Interractable.objectBuilder.SaveZone))
-
+            
+Interractable.allBuild("VariableTracker");
+            setTimeout(()=>{Interractable.Scour("Minbar"); Interractable.allBuild("Minbar")}, 100)
 
 
         }
@@ -450,8 +433,6 @@ Build : (zone) => {
 
             Interractable.Minbar.Used = true;
             let target = zone.previousElementSibling;
-            console.log(target);
-
             let MiniBar = document.createElement("p");
             MiniBar.classList = zone.classList;
             MiniBar.innerHTML = `${zone.id} <div style="float: right; height: 1rem; width: 1rem" id="Toggler"> - </div>`;
@@ -460,6 +441,7 @@ Build : (zone) => {
             let Button = MiniBar.querySelector("#Toggler");
 
             Button.addEventListener('click', Interractable.Minbar.BarToggle)
+            zone.classList.remove("Minbar");
         },
         BarToggle: (ev) => {
             console.log(ev.target)
@@ -679,6 +661,7 @@ Build : (zone) => {
     },
     ///////////////// Initalization aids
     Scour: (Item) => {
+        Interractable[Item].List = [];
         Interractable[Item].List = document.querySelectorAll(`.${Item}`);
     },
     allBuild: (Item) => {
