@@ -1,9 +1,10 @@
 let Interractable = {
     HomeInitalized: false,
     init: () => {
+        
         Interractable.Scour("page");
         Interractable.page.NaviBuild()
-//        console.log(screen.height)
+        //        console.log(screen.height)
         if (!Interractable.HomeInitalized) {
             let initList = Object.keys(Interractable);
             for (i = 2; i < (initList.length - 2); i++) {
@@ -12,10 +13,180 @@ let Interractable = {
                 }
                 Interractable.allBuild(initList[i]);
                 if (Interractable[initList[i]].Used) {
-//                    console.log(initList[i])
+                    //                    console.log(initList[i])
                 }
             };
         }
+
+        setTimeout(() => {
+            document.querySelectorAll(".continue").forEach((element) => {
+                MasterKey(Element);
+                console.log('pling')
+            })
+        }, 100)
+    },
+    
+    //////////////// Dev Toys
+    VariableTracker : {Used: false,
+List: [],
+ObjectPopulate : (zone, variableUsed, path) => {
+    let Keys = Object.keys(variableUsed)
+    for (let i = 0; i < Keys.length; i++) {
+        let additions;
+        if(Interractable.VariableTracker.VariableTest(variableUsed[Keys[i]]) == "object"){
+        additions = document.createElement('ul');
+        }
+        if(Interractable.VariableTracker.VariableTest(variableUsed[Keys[i]]) == "array"){
+        additions = document.createElement('ol');
+        }
+        else{
+        additions = document.createElement('ul');}
+        additions.setAttribute("path", JSON.stringify(`${path}.${Keys[i]}` ))
+        additions.textContent = ` ${Keys[i]}`;
+        additions.class = "continue";
+        additions.setAttribute("info", JSON.stringify(variableUsed[Keys[i]]))
+        zone.appendChild(additions);
+                additions.classList.add("Minbar");
+                additions.id = Keys[i];
+                additions.textContent = "";
+        additions.addEventListener('click', (ev)=>{console.log(ev.target.getAttribute("path"))})
+        switch(Interractable.VariableTracker.VariableTest(variableUsed[Keys[i]])){
+            case "object":        Interractable.VariableTracker.ObjectPopulate(additions, variableUsed[Keys[i]], (path + Keys[i]))
+                break;
+            case "array":
+     Interractable.VariableTracker.ArrayPopulate(additions, variableUsed[Keys[i]], (path + Keys[i]))
+                break;
+            case "primitive":
+                Interractable.VariableTracker.PrimitivePopulate(additions, variableUsed[Keys[i]], (path + '.' + Keys[i]))
+                break;  
+        }
+    }
+},
+ArrayPopulate : (zone, variableUsed, path) => {
+    let Keys = variableUsed
+    for (let i = 0; i < Keys.length; i++) {
+        let additions = document.createElement('ul');
+        additions.setAttribute("path", JSON.stringify(`${path}[${i}]` ))
+        additions.textContent = ` ${Keys[i]}`;
+        additions.class = "continue";
+        additions.setAttribute("info", JSON.stringify(variableUsed[Keys[i]]))
+        zone.appendChild(additions);
+        
+        switch(Interractable.VariableTracker.VariableTest(variableUsed[Keys[i]])){
+            case "object":
+                additions.classList.add("Minbar");
+                additions.id = Keys[i];
+                additions.textContent = "";
+                Interractable.VariableTracker.ObjectPopulate(additions, variableUsed[Keys[i]], (path + Keys[i]))
+                break;
+            case "array":
+                additions.classList.add("Minbar");
+                additions.id = Keys[i];
+                additions.textContent = "";
+                Interractable.VariableTracker.ArrayPopulate(additions, variableUsed[Keys[i]], (path + Keys[i]))
+                break;
+            case "primitive":
+                Interractable.VariableTracker.PrimitivePopulate(additions, variableUsed[Keys[i]], (path + '.' + Keys[i]))
+                break;  
+        }
+    }
+},
+PrimitivePopulate : (zone, variableUsed, path) => {
+    if(variableUsed != undefined){
+        let additions = document.createElement('li');
+        additions.setAttribute("path", JSON.stringify(`${path}`))
+        additions.textContent = ` ${variableUsed}`;
+        additions.class = "continue";
+        additions.setAttribute("info", variableUsed)
+        zone.appendChild(additions);
+        console.log(path)
+    }},
+VariableTest : (testingVar) => {
+    let typing = typeof testingVar;
+    if (typing == 'object' && Array.isArray(testingVar)) {
+        return "array";
+    } else if (typing == 'object' && !Array.isArray(testingVar)){
+        return "object";
+    } else {
+        return "primitive";
+    }
+},
+Build : (zone) => {
+    console.log(zone);
+    console.log(zone);
+    console.log(zone);
+    console.log(zone);
+    let DataPoints = Interractable.objectBuilder.SaveZone;
+    if(zone.id != "ALL") {
+       DataPoints = Interractable.objectBuilder.SaveZone[zone.id]
+       }
+    zone.innerHTML = "";
+    // will be done by zone in the future
+    // Will target by id in the future
+    zone.setAttribute("info", JSON.stringify(DataPoints));
+    Interractable.VariableTracker.ObjectPopulate(zone, DataPoints, "Interractable.objectBuilder.SaveZone.");
+}
+
+    
+    
+},
+    objectBuilder: {
+        Used: false,
+        List: [],
+        SaveZone: {
+            notify: () => {
+                Interractable.allBuild('listFromObject')
+            },
+            TestVars : {
+
+    abilities: {
+        "name": "Abeyance",
+        "Healer": {5: 5, 2:2},
+        "type": 0,
+        "school": 7,
+        "range": 0,
+        "incant": ["The strength of the aether is mine to evoke.", "test"],
+        "materials": "green ",
+        "effect": "target is Stunned for 60 seconds.",
+        "limitations": "",
+        "note": "Ignores armor",
+        "statelink": 7,
+        "id": 1
+    }
+}
+        },
+        Build: (zone) => {
+            console.log("pling")
+            Interractable.objectBuilder.Used = true;
+            let Builder = {};
+            if (Interractable.objectBuilder.SaveZone[zone.id]) {} else {
+                Interractable.objectBuilder.SaveZone[zone.id] = Builder;
+            }
+            zone.querySelector(".Save").addEventListener("click", Interractable.objectBuilder.SaveButton)
+        },
+        SaveButton: (ev) => {
+            let targets = ev.target.parentElement;
+            console.log(targets);
+            let savename = targets.querySelector(".Name").value
+            let Builder = {};
+            Interractable.objectBuilder.SaveZone[targets.id][savename] = Builder;
+            console.log(targets.id)
+
+            targets.childNodes.forEach((target) => {
+                if (target.classList) {
+                    if (target.classList[0] && !(target.classList.contains("Name") && !(target.classList.contains("Save")))) {
+
+                        Builder[target.classList[0]] = target.value;
+                        console.log(target.classList[0])
+                    }
+                }
+            })
+            console.log(JSON.stringify(Interractable.objectBuilder.SaveZone))
+
+
+
+        }
+
     },
     //////////////// Touch Functionality
     draggable: {
@@ -34,8 +205,8 @@ let Interractable = {
 
             let screenwidth = window.innerWidth;
             let screenheight = window.innerHeight;
-//            console.log(screenwidth);
-//            console.log(screenheight);
+            //            console.log(screenwidth);
+            //            console.log(screenheight);
             zone.style.top = `${
 (((zone.getAttribute("FromTop"))/100)*screenheight)}px`;
             zone.style.left = `${
@@ -48,7 +219,7 @@ let Interractable = {
             zone.ondragstart = (ev) => {
                 Start.x = ev.clientX;
                 Start.y = ev.clientY;
-//                console.log('start')
+                //                console.log('start')
             };
 
             zone.ondrag = (ev) => {
@@ -57,7 +228,7 @@ let Interractable = {
                     Current.y = ev.clientY;
                 };
 
-//                console.log(Current)
+                //                console.log(Current)
             }
             zone.ondragend = (ev) => {
                 differenceX = parseInt(zone.style.left) + (Current.x - Start.x);
@@ -75,7 +246,7 @@ let Interractable = {
                 };
                 if (newArea.x > 0 && newArea.y) {
                     Current = newArea;
-//                    console.log(newArea)
+                    //                    console.log(newArea)
                 }
             }
             let dragstart = (ev) => {
@@ -85,7 +256,7 @@ let Interractable = {
                 };
                 if (newArea.x > 0 && newArea.y) {
                     Start = newArea;
-//                    console.log(newArea)
+                    //                    console.log(newArea)
                 }
             };
             let dragend = (ev) => {
@@ -93,7 +264,7 @@ let Interractable = {
                 differenceY = parseInt(zone.style.top) + (Current.y - Start.y);
                 zone.style.top = `${differenceY}px`;
                 zone.style.left = `${differenceX}px`;
-//                console.log(`Moved to X: ${differenceX}px, Y: ${differenceY}px`)
+                //                console.log(`Moved to X: ${differenceX}px, Y: ${differenceY}px`)
 
             }
 
@@ -114,7 +285,7 @@ let Interractable = {
             //////////////// Mobile Drag
             let dragstart = (ev) => {
                 ev.preventDefault()
-//                console.log(ev)
+                //                console.log(ev)
             }
             zone.addEventListener("touchstart", dragstart)
             /////////////// Desktop Drag
@@ -130,7 +301,7 @@ let Interractable = {
         List: [],
         ItemCount: () => {
             Interractable.dropZone.List.forEach((zone) => {
-//                console.log(`${zone.childElementCount} items in column ${zone.id}`)
+                //                console.log(`${zone.childElementCount} items in column ${zone.id}`)
             })
         },
         Build: (zone) => {
@@ -178,7 +349,7 @@ let Interractable = {
                 let newArea = ev.targetTouches[0].screenX
                 if (newArea > 0) {
                     Current = newArea;
-//                    console.log(newArea)
+                    //                    console.log(newArea)
                 }
             }
             let dragstart = (ev) => {
@@ -191,7 +362,7 @@ let Interractable = {
                     console.log("right")
                 } else if (Current < (ThreshHold - 100)) {
                     zone.textContent = `Left!`
-//                    console.log("left")
+                    //                    console.log("left")
 
                 }
             }
@@ -203,9 +374,9 @@ let Interractable = {
             //////////////// Desktop Drag
             zone.draggable = "true";
             zone.ondragend = (ev) => {
-//                console.log(ev.screenX);
+                //                console.log(ev.screenX);
                 Current = ev.screenX;
-//                console.log(zone)
+                //                console.log(zone)
                 if (ev.screenX > (ThreshHold + 100)) {
                     ev.target.textContent = `Right!`;
                 } else if (ev.screenX < (ThreshHold - 100)) {
@@ -215,7 +386,7 @@ let Interractable = {
             };
             zone.ondragstart = (ev) => {
                 ThreshHold = ev.screenX;
-//                console.log(ev.screenX)
+                //                console.log(ev.screenX)
             };
             /////////////////////////////////
             zone.addEventListener('click', () => {
@@ -354,7 +525,6 @@ let Interractable = {
         },
 
     },
-    ///////////////// Filters (Add at a later date)
     listFromObject: {
         Used: false,
         List: [],
@@ -365,12 +535,11 @@ let Interractable = {
             let Builder = {}
             targets.childNodes.forEach((target) => {
                 if (target.classList) {
-                    console.log(target.classList[0])
                     Builder[target.classList[0]] = target;
                 }
             })
             let ListBuilder = Object.keys(Builder)
-zone.innerHTML = ""
+            zone.innerHTML = ""
             Interractable.listFromObject.FilterConstruct(ListBuilder, zone)
             ObjectArrays[zone.id].forEach((item) => {
                 let stage = document.createElement('div');
@@ -380,31 +549,31 @@ zone.innerHTML = ""
                     additions = Builder[li].cloneNode(true)
                     additions.textContent += item[li];
                     stage.appendChild(additions);
-                    
+
                 })
                 zone.appendChild(stage)
                 Interractable.listFromObject.ListItems.push(stage);
             })
         },
-        FilterConstruct: (prop, zone)=>{
+        FilterConstruct: (prop, zone) => {
             let filter = document.createElement('div');
             zone.appendChild(filter);
-             let By = document.createElement('select');
+            let By = document.createElement('select');
             filter.appendChild(By);
             let additions = document.createElement("option")
             additions.value = "";
             additions.textContent = "Filter by";
             By.appendChild(additions)
-            
-            prop.forEach((option)=>{
-            additions = document.createElement("option")
-            additions.value = option;
-            additions.textContent = option;
-            By.appendChild(additions)
+
+            prop.forEach((option) => {
+                additions = document.createElement("option")
+                additions.value = option;
+                additions.textContent = option;
+                By.appendChild(additions)
             })
             additions = document.createElement('select');
-            additions.innerHTML = 
-            `<option value="includes">contains</option><option value="excludes">excludes</option>
+            additions.innerHTML =
+                `<option value="includes">contains</option><option value="excludes">excludes</option>
             <option value="greater"> greater than </option>
             <option value="less"> less than </option>
             <option value="equal"> equal to </option>`;
@@ -413,136 +582,104 @@ zone.innerHTML = ""
             additions.type = "text";
             additions.hint = "value";
             filter.appendChild(additions);
-            
-            
-        filter.addEventListener("change", Interractable.listFromObject.FilterHandler);
-        },
-        
-        FilterHandler: (ev)=>{
-        let By = ev.target.parentElement.childNodes[0].value;
-        let Filter = ev.target.parentElement.childNodes[1].value;
-        let UserInput = ev.target.parentElement.childNodes[2].value;
-        UserInput = UserInput.toUpperCase();
-        let items = Interractable.listFromObject.ListItems;
-        
-        if(By && Filter && UserInput){
-            let x = 0;
-            let target = ObjectArrays[ev.target.parentElement.parentElement.id]
-        if(Filter == "includes" ){
-            items.forEach((item)=>{
-                let itemTarget = JSON.stringify(target[x][By]).toUpperCase()
-            if(itemTarget.includes(UserInput)){
-            item.id = "passed"
-                console.log(item)
-            }
-                
-            else {item.id = 'hidden'}  x ++
-            })
-        }
-            if(Filter == "excludes" ){
-            items.forEach((item)=>{
-                let itemTarget = JSON.stringify(target[x][By]).toUpperCase()
-            if(itemTarget.includes(UserInput)){
-            item.id = "hidden"
-                console.log(item)
-            }
-                
-            else {item.id = 'passed'}  x ++
-            })
-        }
-            if(Filter == "greater" ){
-            items.forEach((item)=>{
-                let itemTarget = target[x][By];
-                itemTarget = JSON.stringify(itemTarget)
-                if(itemTarget){
-                    console.log(itemTarget)
-                itemTarget = itemTarget.replace(/\D+/g, "");}
-                UserInput = JSON.stringify(UserInput).replace(/\D+/g, "");
-            if(itemTarget > UserInput){
-            item.id = "passed"
-                console.log(item)
-            }
-                
-            else {item.id = 'hidden'}  x ++
-            })
-        }
-            if(Filter == "less" ){
-            items.forEach((item)=>{
-                let itemTarget = target[x][By];
-                itemTarget = JSON.stringify(itemTarget)
-                if(itemTarget){
-                    console.log(itemTarget)
-                itemTarget = itemTarget.replace(/\D+/g, "");}
-                UserInput = JSON.stringify(UserInput).replace(/\D+/g, "");
-            if(itemTarget < UserInput){
-            item.id = "passed"
-                console.log(item)
-            }
-                
-            else {item.id = 'hidden'}  x ++
-            })
-        }
-            if(Filter == "equal" ){
-            items.forEach((item)=>{
-                let itemTarget = target[x][By];
-                itemTarget = JSON.stringify(itemTarget)
-                if(itemTarget){
-                    console.log(itemTarget)
-                itemTarget = itemTarget.replace(/\D+/g, "");}
-                UserInput = JSON.stringify(UserInput).replace(/\D+/g, "");
-            if(itemTarget > UserInput){
-            item.id = "passed"
-                console.log(item)
-            }
-                
-            else {item.id = 'hidden'}  x ++
-            })
-        }
-            
-            
-            
-    }
-        }
-    },
 
-    objectBuilder: {
-        Used: false,
-        List: [],
-        SaveZone: { notify: ()=>{
-            Interractable.allBuild('listFromObject')
-        }
+
+            filter.addEventListener("change", Interractable.listFromObject.FilterHandler);
         },
-        Build: (zone) => {
-            console.log("pling")
-            Interractable.objectBuilder.Used = true;
-            let Builder = {};
-            if(Interractable.objectBuilder.SaveZone[zone.id]){}else{
-            Interractable.objectBuilder.SaveZone[zone.id] = Builder;}
-            zone.querySelector(".Save").addEventListener("click", Interractable.objectBuilder.SaveButton)
-            },
-        SaveButton: (ev)=>{
-            let targets = ev.target.parentElement;
-            console.log(targets);
-            let savename = targets.querySelector(".Name").value
-            let Builder = {};
-            Interractable.objectBuilder.SaveZone[targets.id][savename] = Builder;
-            console.log(targets.id)
-            
-            targets.childNodes.forEach((target) => {
-                if (target.classList) {
-                    if(target.classList[0] && !(target.classList.contains("Name")&& !(target.classList.contains("Save")))){
-                        
-                    Builder[target.classList[0]] = target.value;
-                    console.log(target.classList[0])
-                    }
+
+        FilterHandler: (ev) => {
+            let By = ev.target.parentElement.childNodes[0].value;
+            let Filter = ev.target.parentElement.childNodes[1].value;
+            let UserInput = ev.target.parentElement.childNodes[2].value;
+            UserInput = UserInput.toUpperCase();
+            let items = Interractable.listFromObject.ListItems;
+
+            if (By && Filter && UserInput) {
+                let x = 0;
+                let target = ObjectArrays[ev.target.parentElement.parentElement.id]
+                if (Filter == "includes") {
+                    items.forEach((item) => {
+                        let itemTarget = JSON.stringify(target[x][By]).toUpperCase()
+                        if (itemTarget.includes(UserInput)) {
+                            item.id = "passed"
+                            console.log(item)
+                        } else {
+                            item.id = 'hidden'
+                        }
+                        x++
+                    })
                 }
-            })
-           console.log(JSON.stringify(Interractable.objectBuilder.SaveZone))
-            
-        
-            
+                if (Filter == "excludes") {
+                    items.forEach((item) => {
+                        let itemTarget = JSON.stringify(target[x][By]).toUpperCase()
+                        if (itemTarget.includes(UserInput)) {
+                            item.id = "hidden"
+                            console.log(item)
+                        } else {
+                            item.id = 'passed'
+                        }
+                        x++
+                    })
+                }
+                if (Filter == "greater") {
+                    items.forEach((item) => {
+                        let itemTarget = target[x][By];
+                        itemTarget = JSON.stringify(itemTarget)
+                        if (itemTarget) {
+                            console.log(itemTarget)
+                            itemTarget = itemTarget.replace(/\D+/g, "");
+                        }
+                        UserInput = JSON.stringify(UserInput).replace(/\D+/g, "");
+                        if (itemTarget > UserInput) {
+                            item.id = "passed"
+                            console.log(item)
+                        } else {
+                            item.id = 'hidden'
+                        }
+                        x++
+                    })
+                }
+                if (Filter == "less") {
+                    items.forEach((item) => {
+                        let itemTarget = target[x][By];
+                        itemTarget = JSON.stringify(itemTarget)
+                        if (itemTarget) {
+                            console.log(itemTarget)
+                            itemTarget = itemTarget.replace(/\D+/g, "");
+                        }
+                        UserInput = JSON.stringify(UserInput).replace(/\D+/g, "");
+                        if (itemTarget < UserInput) {
+                            item.id = "passed"
+                            console.log(item)
+                        } else {
+                            item.id = 'hidden'
+                        }
+                        x++
+                    })
+                }
+                if (Filter == "equal") {
+                    items.forEach((item) => {
+                        let itemTarget = target[x][By];
+                        itemTarget = JSON.stringify(itemTarget)
+                        if (itemTarget) {
+                            console.log(itemTarget)
+                            itemTarget = itemTarget.replace(/\D+/g, "");
+                        }
+                        UserInput = JSON.stringify(UserInput).replace(/\D+/g, "");
+                        if (itemTarget > UserInput) {
+                            item.id = "passed"
+                            console.log(item)
+                        } else {
+                            item.id = 'hidden'
+                        }
+                        x++
+                    })
+                }
+
+
+
+            }
         }
-        
     },
     ///////////////// Initalization aids
     Scour: (Item) => {
@@ -556,7 +693,11 @@ zone.innerHTML = ""
 }
 ///////////////////////////////////////////
 
-//let test = document.createElement("p")
-//test.textContent = Interractable.draggable.Build
-//document.querySelector(".page").appendChild(test)
+
+
+
+
+
+
+
 document.addEventListener("DOMContentLoaded", Interractable.init)

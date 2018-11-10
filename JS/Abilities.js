@@ -1,7 +1,6 @@
 
 
 let ObjectArrays = { 
-    colours: Interractable.objectBuilder.SaveZone.PrimaryColour,
     
     
     abilities :[{

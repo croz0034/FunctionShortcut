@@ -1,7 +1,7 @@
 *{
     box-sizing: border-box;
     margin: 0;
-    overflow: hidden;
+/*    overflow: hidden;*/
 }
 
 .dropZone {
@@ -84,7 +84,7 @@ background: white;
     
 }
 .ConstructSettings{
-    border: solid 0.5px; width: 10rem; float: left; max-height: 14rem; overflow-y: scroll; overflow-x: hidden;
+    border: solid 0.5px;  float: left;
 }
 .colourBox{
     border: solid black 1px;
@@ -94,9 +94,14 @@ background: white;
     width: 1rem;
     height: 1rem;
 }
-
+ul, ol {
+    border: outset black 1px;
+}
 .TextTest{
     border: solid black;
     padding: 1rem;
     text-align: center;
+}
+li{
+    border: none;
 }
