@@ -41,7 +41,7 @@ ObjectPopulate : (zone, variableUsed, path) => {
         }
         else{
         additions = document.createElement('ul');}
-        additions.setAttribute("path", JSON.stringify(`${path}.${Keys[i]}` ))
+        additions.setAttribute("path", JSON.stringify(`${path}.${Keys[i]}.` ))
         additions.textContent = ` ${Keys[i]}`;
         additions.class = "continue";
         additions.setAttribute("info", JSON.stringify(variableUsed[Keys[i]]))
@@ -112,10 +112,6 @@ VariableTest : (testingVar) => {
     }
 },
 Build : (zone) => {
-    console.log(zone);
-    console.log(zone);
-    console.log(zone);
-    console.log(zone);
     let DataPoints = Interractable.objectBuilder.SaveZone;
     if(zone.id != "ALL") {
        DataPoints = Interractable.objectBuilder.SaveZone[zone.id]
