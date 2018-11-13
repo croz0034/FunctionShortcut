@@ -18,6 +18,13 @@
 
     <div class="page" id="Text">
 
+       
+       
+                <div class="Palette draggable" id="hidden" style="width: 20rem; height: 8rem; background: white; position: fixed; border: solid 1px black" FromTop="10" FromLeft="10">
+                    <h5 style="margin: 0;margin-bottom: 10px">Please select your colour:</h5>
+                    <div class="ColourZone" style="margin: 5px"></div>
+                </div>
+       
         <div class="drawScreen"></div>
         <div class="ToolBar">
             Mouse Mode: <select class="Mode">
@@ -27,19 +34,27 @@
                     <option value="BoxDraw">BoxDraw</option>
                     <option value="Text">Text</option>
                 </select>
-            
-            <div class="objectBuilder Minbar" id="Primary Colour">
+                
+<!--
+        <button id="Tethered" class="active">Zone Targeted</button>
+        <button id="Untethered">Global Position</button>
+-->
+        
+<!--           New Toolbar -->
+            <p>Active Colours:</p>
+           <div style="width: 1rem; height: 1rem; background: rgb(0,0,0); margin: 5px; float: left; border: 1px solid black;" id="Primary Colour"></div><p style="margin-top: 4px">: Primary Colour</p>
+           <div style="width: 1rem; height: 1rem; background: rgb(255,255,255); margin: 5px; float: left; border: 1px solid black;" id="Secondary Colour"></div><p style="margin-top: 4px">: Secondary Colour</p>
+           <div style="width: 1rem; height: 1rem; background: rgb(0,0,0); margin: 5px; float: left; border: 1px solid black;" id="Border Colour"></div><p style="margin-top: 4px">: Border Colour</p>
+           
+<!--           /////////////////////////////////--> <div class="objectBuilder Minbar Colours" id="Colours">
+               <div id="Colour Minbar" style="width: 100%; height: 3rem; background: rgb(0,0,0)"></div>
                 Red: <input type="range" min="0" max="255" value="0" class="Red"><br>
                 Green: <input type="range" min="0" max="255" value="0" class="Green"><br>
                 Blue: <input type="range" min="0" max="255" value="0" class="Blue"><br>
                 <input type="text" placeholder="ColourName" class="Name"> <button class="Save">Save</button>
             </div>
-            <div class="objectBuilder Minbar" id="Secondary Colour">
-                Red: <input type="range" min="0" max="255" value="255" class="Red"><br>
-                Green: <input type="range" min="0" max="255" value="255" class="Green"><br>
-                Blue: <input type="range" min="0" max="255" value="255" class="Blue"><br>
-                <input type="text" placeholder="ColourName" class="Name"> <button class="Save">Save</button>
-            </div>
+            
+       
 
             <div class="Minbar" id="Text Settings">
                 
@@ -70,6 +85,32 @@
 
 
 
+    </div>
+ <div class="page" id="Element Options">   
+<!--       ////////////////////////////-->
+        <div class="objectBuilder Minbar" id="Element" >
+            <p>Element Type:<select class="element" style="display: inline;"></select></p>
+            <p >Padding:<input type="number" class="padding" placeholder="px"></p>
+            <p >Margins:<input type="number" placeholder="px" class="margin"></p>
+            <p >Position: <select class="position">
+                <option value="static">static</option>
+                <option value="relative">relative</option>
+                <option value="fixed">fixed</option>
+                <option value="absolute">absolute</option>
+                <option value="sticky">sticky</option>
+            </select></p>
+            <p style="display: inline">Display: <select class="display">
+                <option value="block">block</option>
+                <option value="inline-block">inline-block</option>
+                <option value="inline">inline</option>
+                <option value="none">hidden</option>
+            </select></p>
+            <button class="Save">Save</button>
+        </div>
+<!--        /////////////////////////-->
+   
+   
+       
     </div>
     
 <div class="page" id="Var Tracker">

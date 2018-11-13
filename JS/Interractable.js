@@ -129,6 +129,18 @@ Build : (zone) => {
         Used: false,
         List: [],
         SaveZone: {
+            Colours:{
+                Black: {
+                    Red: 0,
+                    Green: 0,
+                    Blue: 0
+                },
+                White: {
+                    Red: 255,
+                    Green: 255,
+                    Blue: 255
+                },
+            }
         },
         Build: (zone) => {
             console.log("pling")
@@ -136,7 +148,8 @@ Build : (zone) => {
             let Builder = {};
             if (Interractable.objectBuilder.SaveZone[zone.id]) {} else {
                 Interractable.objectBuilder.SaveZone[zone.id] = Builder;
-            }
+            };
+           console.log(zone.childNodes);
             zone.querySelector(".Save").addEventListener("click", Interractable.objectBuilder.SaveButton)
         },
         SaveButton: (ev) => {
@@ -434,11 +447,17 @@ Interractable.allBuild("VariableTracker");
             Interractable.Minbar.Used = true;
             let target = zone.previousElementSibling;
             let MiniBar = document.createElement("p");
+            zone.classList.remove("Minbar")
+            zone.classList.add("Minibar")
             MiniBar.classList = zone.classList;
             MiniBar.innerHTML = `${zone.id} <div style="float: right; height: 1rem; width: 1rem" id="Toggler"> - </div>`;
             if(zone.getAttribute('info')){
                 MiniBar.setAttribute("info", zone.getAttribute('info'))
             }
+            
+            MiniBar.classList.forEach((item)=>{
+                if((item == "draggable") || (item == "zoneTetheredDrag") || (item == "swipeCard")){Interractable[item].Build(MiniBar)};
+            })
             zone.parentElement.replaceChild(MiniBar, zone);
             MiniBar.appendChild(zone)
             let Button = MiniBar.querySelector("#Toggler");

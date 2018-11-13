@@ -1,5 +1,6 @@
 *{
     margin: none;
+    padding: none;
     box-sizing: border-box;
     z-index: 0;
 }
@@ -19,7 +20,7 @@
 .hidden, #hidden{
     display: none;
 }
-.Minbar{
+.Minibar{
     border:solid 1px black;
 }
 .ToolBar{
@@ -38,7 +39,7 @@
     margin-top: -1rem;
 }
 input, select {
-    width: 100%;
+    width: 95%;
 }
 #nav{
     border: solid;
@@ -51,4 +52,34 @@ input, select {
 #nav > ul > li {
     display: inline;
         border-right: solid lightgray;
+}
+.ToolWindow{
+    position: fixed;
+    border: 1px solid black;
+    width: 375px;
+}
+button{
+    display: inline;
+    background: white;
+    width: 48%;
+    border: outset 2px gray;
+    border-radius: 5px;
+}
+button:active{
+    display: inline;
+    background: gray;
+    width: 48%;
+    border: inset 2px white;
+    border-radius: 5px;
+    
+}
+.active{
+    display: inline;
+    background: gray;
+    width: 48%;
+    border: inset 2px lightgray;
+    border-radius: 5px;
+}
+.objectBuilder{
+    border: solid black 1px;
 }
