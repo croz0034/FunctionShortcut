@@ -134,8 +134,7 @@ let Drawbed = {
         let zone = ev.target;
 //            document.querySelector('.drawScreen');
         let picker = document.getElementById("Text Settings");
-        let additions = document.createElement(picker.querySelector(".TextType").value)
-        if( Drawbed.PositionType == "Untethered"){
+        let additions = document.createElement(picker.querySelector(".TextType").value);
         let X = ev.pageX;
         let Y = ev.pageY;
         additions.style.position = "absolute";
@@ -143,7 +142,6 @@ let Drawbed = {
         additions.style.left = X;
 ///////// Navbar Concession
         additions.style.top = (parseInt(additions.style.top) - 40 ) + "px";
-        }
 ////////////////////////
         additions.style.color = ColourChecker("Primary Colour")
         additions.style.background = ColourChecker("Secondary Colour")
@@ -173,13 +171,16 @@ document.addEventListener("DOMContentLoaded", Drawbed.init)
 
 
 
-//HTML Element = {
+//HTML Element = 
+//    {
 //    element: document.querySelector(".element").value,
 //    margin: document.querySelector(".margin").value,
 //    padding: document.querySelector(".padding").value, 
 //    position: document.querySelector(".position").value,
 //    display: document.querySelector(".position").value,
-//////////// Colour Settings
+////////// Colour Settings
+//
+//    {
 //    background: {colour: "rgb(255, 255, 255)", Name: "White"},
 //    color: {colour: "rgb(0, 0, 0)", Name: "Black"},
 //    Border: {colour: "rgb(0, 0, 0)", Name: "Not necessary, but will save time"},
@@ -198,4 +199,4 @@ document.addEventListener("DOMContentLoaded", Drawbed.init)
 //    borderWidth: {top:'1px', right:'1px', bottom:'1px', left:'1px'},
 //    borderColor: {top:'1px', right:'1px', bottom:'1px', left:'1px'},
 //    }
-//}
+//

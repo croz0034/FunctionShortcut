@@ -121,9 +121,6 @@ Build : (zone) => {
     zone.setAttribute("info", JSON.stringify(DataPoints));
     Interractable.VariableTracker.ObjectPopulate(zone, DataPoints, "Interractable.objectBuilder.SaveZone");
 }
-
-    
-    
 },
     objectBuilder: {
         Used: false,
@@ -178,6 +175,98 @@ Interractable.allBuild("VariableTracker");
 
 
         }
+
+    },
+    Minbar: {
+        Used: false,
+        List: [],
+        Build: (zone) => {
+
+            Interractable.Minbar.Used = true;
+            let target = zone.previousElementSibling;
+            let MiniBar = document.createElement("p");
+            zone.classList.remove("Minbar")
+            zone.classList.add("Minibar")
+            MiniBar.classList = zone.classList;
+            MiniBar.innerHTML = `${zone.id} <div style="float: right; height: 1rem; width: 1rem" id="Toggler"> - </div>`;
+            if(zone.getAttribute('info')){
+                MiniBar.setAttribute("info", zone.getAttribute('info'))
+            }
+            
+            MiniBar.classList.forEach((item)=>{
+                if((item == "draggable") || (item == "zoneTetheredDrag") || (item == "swipeCard")){Interractable[item].Build(MiniBar)};
+            })
+            zone.parentElement.replaceChild(MiniBar, zone);
+            MiniBar.appendChild(zone)
+            let Button = MiniBar.querySelector("#Toggler");
+
+            Button.addEventListener('click', Interractable.Minbar.BarToggle)
+            
+            
+            if (zone.classList.contains("Minimized")){
+                let ev = {target: Button};
+                console.log("ping")
+                Interractable.Minbar.BarToggle(ev)
+            }
+        },
+        BarToggle: (ev) => {
+            console.log(ev.target)
+            ev.target.parentElement.childNodes.forEach((Item) => {
+                if (Item.id != "Toggler" && Item.id != "DeleteX") {
+                    if (Item.id != "hidden") {
+                        Item.id = "hidden";
+                    } else {
+                        Item.id = "";
+                    }
+                } else {
+                    if (Item.textContent.includes("-")) {
+                        console.log('pling')
+                        Item.textContent = "+"
+                    } else if (Item.textContent.includes("+")) {
+                        Item.textContent = "-"
+                    }
+                }
+            })
+        }
+    },
+    Deletable: {
+        Used: false,
+        List: [],
+        Build: (zone) => {
+            Interractable.Deletable.Used = true;
+
+            if (zone.classList.contains("Minbar")) {
+                let target = zone.parentElement.querySelector("#Toggler")
+                let additions = document.createElement("div");
+                additions.style.float = "right";
+                additions.style.height = "1rem";
+                additions.style.width = "1rem";
+                additions.id = "DeleteX";
+                additions.textContent = "X";
+                additions.addEventListener('click', Interractable.Deletable.trash)
+                console.log(target)
+                target.parentElement.insertBefore(additions, target);
+            } else {
+
+                let target = zone.previousElementSibling;
+                console.log(target);
+
+                let DeleteX = document.createElement("p");
+                DeleteX.classList = zone.classList;
+                DeleteX.innerHTML = `${zone.id} <div style="float: right; height: 1rem; width: 1rem" id="DeleteX" onclick="${Interractable.Deletable.trash}"> X </div>`;
+                zone.parentElement.replaceChild(DeleteX, zone);
+                DeleteX.appendChild(zone)
+                let Button = DeleteX.querySelector("#DeleteX")
+
+                Button.addEventListener('click', Interractable.Deletable.trash)
+
+            }
+        },
+        trash: (ev) => {
+            let choppingBlock = ev.target.parentElement;
+            console.log(choppingBlock);
+            choppingBlock.parentElement.removeChild(choppingBlock)
+        },
 
     },
     //////////////// Touch Functionality
@@ -437,92 +526,6 @@ Interractable.allBuild("VariableTracker");
 
             }
         }
-
-    },
-    Minbar: {
-        Used: false,
-        List: [],
-        Build: (zone) => {
-
-            Interractable.Minbar.Used = true;
-            let target = zone.previousElementSibling;
-            let MiniBar = document.createElement("p");
-            zone.classList.remove("Minbar")
-            zone.classList.add("Minibar")
-            MiniBar.classList = zone.classList;
-            MiniBar.innerHTML = `${zone.id} <div style="float: right; height: 1rem; width: 1rem" id="Toggler"> - </div>`;
-            if(zone.getAttribute('info')){
-                MiniBar.setAttribute("info", zone.getAttribute('info'))
-            }
-            
-            MiniBar.classList.forEach((item)=>{
-                if((item == "draggable") || (item == "zoneTetheredDrag") || (item == "swipeCard")){Interractable[item].Build(MiniBar)};
-            })
-            zone.parentElement.replaceChild(MiniBar, zone);
-            MiniBar.appendChild(zone)
-            let Button = MiniBar.querySelector("#Toggler");
-
-            Button.addEventListener('click', Interractable.Minbar.BarToggle)
-            zone.classList.remove("Minbar");
-        },
-        BarToggle: (ev) => {
-            console.log(ev.target)
-            ev.target.parentElement.childNodes.forEach((Item) => {
-                if (Item.id != "Toggler" && Item.id != "DeleteX") {
-                    if (Item.id != "hidden") {
-                        Item.id = "hidden";
-                    } else {
-                        Item.id = "";
-                    }
-                } else {
-                    if (Item.textContent.includes("-")) {
-                        console.log('pling')
-                        Item.textContent = "+"
-                    } else if (Item.textContent.includes("+")) {
-                        Item.textContent = "-"
-                    }
-                }
-            })
-        }
-    },
-    Deletable: {
-        Used: false,
-        List: [],
-        Build: (zone) => {
-            Interractable.Deletable.Used = true;
-
-            if (zone.classList.contains("Minbar")) {
-                let target = zone.parentElement.querySelector("#Toggler")
-                let additions = document.createElement("div");
-                additions.style.float = "right";
-                additions.style.height = "1rem";
-                additions.style.width = "1rem";
-                additions.id = "DeleteX";
-                additions.textContent = "X";
-                additions.addEventListener('click', Interractable.Deletable.trash)
-                console.log(target)
-                target.parentElement.insertBefore(additions, target);
-            } else {
-
-                let target = zone.previousElementSibling;
-                console.log(target);
-
-                let DeleteX = document.createElement("p");
-                DeleteX.classList = zone.classList;
-                DeleteX.innerHTML = `${zone.id} <div style="float: right; height: 1rem; width: 1rem" id="DeleteX" onclick="${Interractable.Deletable.trash}"> X </div>`;
-                zone.parentElement.replaceChild(DeleteX, zone);
-                DeleteX.appendChild(zone)
-                let Button = DeleteX.querySelector("#DeleteX")
-
-                Button.addEventListener('click', Interractable.Deletable.trash)
-
-            }
-        },
-        trash: (ev) => {
-            let choppingBlock = ev.target.parentElement;
-            console.log(choppingBlock);
-            choppingBlock.parentElement.removeChild(choppingBlock)
-        },
 
     },
     listFromObject: {
