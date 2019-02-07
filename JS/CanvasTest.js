@@ -5,7 +5,7 @@ let DrawTools = {
         DrawTools.pixelTranslate = {x: base.offsetLeft, y: base.offsetTop};
         DrawTools.initalListeners();
         CanvasElement.init(ev); 
-//        document.getElementById("Save").addEventListener('click', DrawTools.Save)
+        CameraTool.init(ev)
     },
     initalListeners: ()=>{
         let d = DrawTools;
@@ -32,12 +32,7 @@ let DrawTools = {
         d.Current = ""; d.Start = "";
         base.removeEventListener('mousemove', d.dragEvent)
         base.removeEventListener('touchmove', d.dragEvent)
-        
-        let save = document.getElementById("Save")
-        var image = base.toDataURL("image/png").replace("image/png", "image/octet-stream");
-        save.href = image;
-        save.download = "TestName";
-        
+        DrawTools.Save(ev);
     },
     Utar: (ev)=>{
         let d = DrawTools.pixelTranslate;
@@ -48,18 +43,57 @@ let DrawTools = {
         }
     },
     Save: (ev)=>{
-        var image = base.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
-window.location.href=image; // it will save locally
-        
-        
+        let save = document.getElementById("Save")
+        var image = base.toDataURL("image/png").replace("image/png", "image/octet-stream");
+        save.href = image;
+        save.download = "TestName";
     }
 }
 
+let CameraTool = {
+    open: false,
+    constraints: {
+        audio: false,
+        video: {
+            width: 400, height: 400,
+            facingMode: "environment"} //or "user" for selfie mode
+    },
+    init: (ev)=>{ document.querySelector("#camera").addEventListener("click", CameraTool.shutter);
+
+               
+
+    },
+    shutter: async(ev)=>{
+        let shutter = document.getElementById("Shutter");
+       CameraTool.open = !CameraTool.open;
+           CanvasElement.Element.classList.toggle("hidden");
+        shutter.classList.toggle("hidden")
+        console.log("ping")
+        
+       if(CameraTool.open){
+           navigator.mediaDevices.getUserMedia(CameraTool.constraints)
+               .then(function sucess(stream){
+               console.log("ok!");
+               console.log(stream)
+            shutter.srcObject = stream
+               shutter.onloadedmetadata = (ev)=>{ shutter.play()}
+        })}
+        
+        else{
+            console.log(shutter.srcObject)
+            CanvasElement.Context.drawImage(shutter, 0, 0, 400, 400)
+            
+        }
+    }
+    
+}
 let CanvasElement = {
     init: (ev)=>{
     let c = CanvasElement;
     c.Element = document.getElementById("PaintZone");
     c.Context = c.Element.getContext("2d");
+    c.Context.lineWidth = 3;
+    c.Context.strokeStyle = "yellow"
 }
 }
 
