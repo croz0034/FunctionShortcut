@@ -55,7 +55,7 @@ let CameraTool = {
     constraints: {
         audio: false,
         video: {
-            width: 400, height: 400,
+            width: 800, height: 800,
             facingMode: "environment"} //or "user" for selfie mode
     },
     init: (ev)=>{ document.querySelector("#camera").addEventListener("click", CameraTool.shutter);
@@ -81,7 +81,7 @@ let CameraTool = {
         
         else{
             console.log(shutter.srcObject)
-            CanvasElement.Context.drawImage(shutter, 0, 0, 400, 400)
+            CanvasElement.Context.drawImage(shutter, 0, 0, 800, 800)
             
         }
     }
