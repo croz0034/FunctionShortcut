@@ -1,0 +1,31 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+/*    overflow: hidden;*/
+}
+
+#Video, #Canvas, #Background{
+    position: relative;
+    height:  300px;
+    width: 600px;
+    border: solid 3px blue;
+    margin-bottom: 0;
+    z-index: 2
+}
+#Video{
+    display: none
+}
+#Background{
+    position: absolute;
+    left: 0;
+    z-index: 1;
+}
+#Start{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 10vw;
+    height: 80vh;
+    z-index: 2
+    
+}
