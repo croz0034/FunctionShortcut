@@ -20,12 +20,3 @@
     left: 0;
     z-index: 1;
 }
-#Start{
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 10vw;
-    height: 80vh;
-    z-index: 2
-    
-}
