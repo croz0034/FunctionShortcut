@@ -9,7 +9,6 @@
     height:  300px;
     width: 600px;
     border: solid 3px blue;
-    margin-bottom: 0;
     z-index: 2
 }
 #Video{
@@ -18,5 +17,6 @@
 #Background{
     position: absolute;
     left: 0;
+    top: 0;
     z-index: 1;
 }
