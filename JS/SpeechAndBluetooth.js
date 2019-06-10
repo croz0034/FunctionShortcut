@@ -27,7 +27,7 @@ let blueToothModule = {
     },
     search: (ev)=>{ 
         
-        navigator.bluetooth.requestDevice({acceptAllDevices: true}).then((device)=>{
+        navigator.bluetooth.requestDevice({filters: [{name: "Mini"}]}).then((device)=>{
         console.log(device)
             let z = device.gatt.connect()
             console.log(z);
